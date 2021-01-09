@@ -13,3 +13,18 @@ required_packages:
   - firewalld
   - pygpgme
   - yum-utils
+  - epel-release
+
+# Locked shared memory - should suffice to lock the shared memory log
+# (varnishd -l argument)
+# Default log size is 80MB vsl + 1M vsm + header -> 82MB
+# unit is bytes
+limit_memlock: 85983232
+# Maximum size of the corefile.
+limit_core: infinity
+# Number of open file descriptor limit
+limit_nofile: 131072
+
+# available storage backends = default(is an alias to umem, where available, or malloc otherwise), malloc, umem, file, deprecated_persistent
+storage_backend: malloc
+storage_backend_size: 256m

@@ -10,7 +10,7 @@
 
 - name: Install the required packages
   package:
-    name: "{{ os_required_packages }}"
+    name: "{{ required_packages }}"
     state: present
     use: auto
 
@@ -46,8 +46,22 @@
 
   - name: Manage firewalld configuration
     firewalld:
-      port: "{{ redis_port }}/tcp"
+      port: "{{ port }}/tcp"
       permanent: true
       immediate: true
       state: enabled
   when: (firewalld_enabled | bool)
+
+- name: Transfer template files to the remote location
+  template:
+    src: "{{ item.src_path }}"
+    dest: "{{ item.dest_path }}"
+    owner: "{{ item.user }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - {src_path: varnish.service.j2, dest_path: /usr/lib/systemd/system/varnish.service, user: root, group: root, mode: 0644}
+    - {src_path: default.vcl.j2, dest_path: /etc/varnish/default.vcl, user: root, group: root, mode: 0644}
+  notify:
+    - force systemd to reread configs
+    - start and enable varnish service

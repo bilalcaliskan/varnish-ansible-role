@@ -1,2 +1,12 @@
 ---
-# handlers file for bilalcaliskan.varnish
+
+- name: force systemd to reread configs
+  systemd:
+    daemon_reload: true
+
+- name: start and enable varnish service
+  systemd:
+    name: varnish
+    state: started
+    enabled: true
+    daemon_reload: true
