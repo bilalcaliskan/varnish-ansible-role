@@ -50,7 +50,7 @@ node03.example.com
         varnish_install: true
 ```
 
-### Example Playbook File For `Uninstallation`
+### Example Playbook File For Uninstallation
 
 ```yaml
 - hosts: varnish
