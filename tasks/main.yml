@@ -1,2 +1,9 @@
 ---
-# tasks file for bilalcaliskan.varnish
+
+- name: Include install.yml file conditionally
+  include_tasks: install.yml
+  when: (varnish_install | bool)
+
+- name: Include uninstall.yml file conditionally
+  include_tasks: uninstall.yml
+  when: not (varnish_install | bool)

@@ -1,2 +1,15 @@
 ---
-# defaults file for bilalcaliskan.varnish
+
+varnish_install: true
+firewalld_enabled: true
+
+# available_versions = ["40", "50", "51", "52", "60", "60lts", "61", "62", "63", "64", "65"]
+# check https://packagecloud.io/varnishcache for more
+version: 60lts
+varnish_install_repo: varnishcache_varnish{{ version }}
+port: 6081
+
+required_packages:
+  - firewalld
+  - pygpgme
+  - yum-utils

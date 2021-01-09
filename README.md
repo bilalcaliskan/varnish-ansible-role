@@ -1,38 +1,66 @@
-Role Name
-=========
+## Varnish Ansible Role
 
-A brief description of the role goes here.
+[![Build Status](https://travis-ci.org/bilalcaliskan/varnish-ansible-role.svg?branch=master)](https://travis-ci.org/bilalcaliskan/varnish-ansible-role)
 
-Requirements
-------------
+Installs and configures Varnish cache on RHEL/CentOS 7/8 instances.
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+### Requirements
 
-Role Variables
---------------
+No special requirements; note that this role requires root access, so either run it in a
+playbook with a global `become: true`, or invoke the role in your playbook like:
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+- hosts: all
+  become: true
+  roles:
+    - role: bilalcaliskan.varnish
+      vars:
+        simple_role_var: foo
+```
 
-Dependencies
-------------
+### Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+See the default values in [defaults/main.yml](defaults/main.yml). You can overwrite them in [vars/main.yml](vars/main.yml) if neccessary or you can set them while running playbook.
 
-Example Playbook
-----------------
+> Please note that this role will ensure that `firewalld` systemd service on your servers are started and enabled by default. If you want to stop and disable `firewalld` service, please modify below variable as false when running playbook:  
+> ```yaml  
+> firewalld_enabled: false
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Dependencies
 
-License
--------
+None
 
-BSD
+### Example Inventory File
 
-Author Information
-------------------
+```
+[varnish]
+node01.example.com
+node02.example.com
+node03.example.com
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+### Example Playbook File For Installation
+```yaml
+- hosts: varnish
+  become: true
+  roles:
+    - role: bilalcaliskan.varnish
+      vars:
+        varnish_install: true
+```
+
+### Example Playbook File For `Uninstallation`
+
+```yaml
+- hosts: varnish
+  become: true
+  roles:
+    - role: bilalcaliskan.varnish
+      vars:
+        varnish_install: false
+```
+
+### License
+
+MIT / BSD

@@ -1,0 +1,53 @@
+---
+
+- name: Get service facts
+  service_facts:
+
+- name: Set fact before installation
+  set_fact:
+    varnish_installed: false
+  when: ansible_facts.services["varnish.service"] is not defined
+
+- name: Install the required packages
+  package:
+    name: "{{ os_required_packages }}"
+    state: present
+    use: auto
+
+- name: Transfer varnishcache RPM repo template file to the remote location
+  template:
+    src: varnishcache.repo.j2
+    dest: /etc/yum.repos.d/varnishcache.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install the desired version of varnish
+  yum:
+    name: varnish
+    enablerepo: "{{ varnish_install_repo }}"
+    state: present
+
+- name: Stop firewalld if desired by user
+  service:
+    name: firewalld
+    state: stopped
+    enabled: false
+  when: not (firewalld_enabled | bool)
+
+- name: Firewalld related block
+  block:
+  - name: Ensure firewalld is started and enabled
+    service:
+      name: firewalld
+      state: started
+      enabled: true
+    changed_when: false
+
+  - name: Manage firewalld configuration
+    firewalld:
+      port: "{{ redis_port }}/tcp"
+      permanent: true
+      immediate: true
+      state: enabled
+  when: (firewalld_enabled | bool)

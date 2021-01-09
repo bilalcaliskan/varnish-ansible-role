@@ -1,0 +1,11 @@
+---
+
+- name: Verify
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure varnish service is started and enabled
+      service:
+        name: varnish
+        state: started
+        enabled: true
