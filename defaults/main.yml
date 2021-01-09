@@ -28,3 +28,22 @@ limit_nofile: 131072
 # available storage backends = default(is an alias to umem, where available, or malloc otherwise), malloc, umem, file, deprecated_persistent
 storage_backend: malloc
 storage_backend_size: 256m
+
+# http://rocketmodule.com/blog/example-varnish-vcl-drupal-pressflow-site/index.html
+backends:
+  - host: 127.0.0.1
+    port: 8080
+    max_connections: 800
+    c: 600s
+    first_byte_timeout: 600s
+    connect_timeout: 600s
+    probe:
+      url: "/"
+      timeout: 1s
+      interval: 5s
+      window: 5
+      threshold: 3
+    request:
+      - host_header: "backend.example.com"
+        url: "(^/articles/)|(^/tags/)|(^/taxonomy/)"
+        ttl: 10m
