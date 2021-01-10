@@ -15,8 +15,8 @@ vcl 4.0;
 
 {% for backend in backends %}
 backend {{ backend.name }} {
-    .host = {{ backend.host }};
-    .port = {{ backend.port }};
+    .host = "{{ backend.host }}";
+    .port = "{{ backend.port }}";
     .connect_timeout = {{ backend.connect_timeout }};
     .first_byte_timeout = {{ backend.first_byte_timeout }};
     .between_bytes_timeout = {{ backend.between_bytes_timeout }};
