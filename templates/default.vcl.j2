@@ -11,7 +11,12 @@
 # Marker to tell the VCL compiler that this VCL has been adapted to the
 # new 4.0 format.
 
+# Conf sample taken from https://github.com/mattiasgeniar/varnish-6.0-configuration-templates/blob/master/default.vcl
+
 vcl 4.1;
+
+import directors;
+import std;
 
 {% for backend in backends %}
 backend {{ backend.name }} {
@@ -215,7 +220,7 @@ sub vcl_fini {
 
 
 
-
+#########
 
 
 
@@ -290,15 +295,15 @@ sub vcl_backend_response {
     }
 
     {% for backend in backends -%}
-    if (req.http.host == "{{ backend.host }}") {
+    if (beresp.http.host == "{{ backend.host }}") {
         {% for request in backend.requests -%}
 
         {% if request.ttl is defined %}
-        set beresp.ttl = request.ttl;
+        set beresp.ttl = {{ request.ttl }};
         {% endif %}
 
         {% if request.grace is defined %}
-        set beresp.grace = request.grace;
+        set beresp.grace = {{ request.grace }};
         {% endif %}
 
         {% endfor %}

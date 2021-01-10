@@ -39,8 +39,8 @@ global_grace: 30m
 
 # http://rocketmodule.com/blog/example-varnish-vcl-drupal-pressflow-site/index.html
 backends:
-  - name: nginx1
-    host: 127.0.0.1
+  - name: default
+    host: default.example.com
     port: 8080
     max_connections: 800
     first_byte_timeout: 600s
@@ -55,12 +55,12 @@ backends:
       threshold: 3
     requests:
       - url: "/"
-        ttl: 10m
+        ttl: 1m
         grace: 10m
         keep: 20m
-  - name: nginx2
-    host: 127.0.0.1
-    port: 8090
+  - name: default2
+    host: default2.example.com
+    port: 8080
     max_connections: 800
     first_byte_timeout: 600s
     connect_timeout: 600s
@@ -73,4 +73,4 @@ backends:
       window: 5
       threshold: 3
     requests:
-      - url: "\\.jpg$"
+      - url: "/"
