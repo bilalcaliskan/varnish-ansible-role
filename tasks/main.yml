@@ -2,8 +2,8 @@
 
 - name: Include install.yml file conditionally
   include_tasks: install.yml
-  when: (varnish_install | bool)
+  when: (install_varnish | bool)
 
 - name: Include uninstall.yml file conditionally
   include_tasks: uninstall.yml
-  when: not (varnish_install | bool)
+  when: not (install_varnish | bool)

@@ -1,0 +1,41 @@
+---
+
+- name: Get service facts
+  service_facts:
+
+- name: Check if Varnish is installed
+  set_fact:
+    varnish_installed: true
+  when: ansible_facts.services["varnish.service"] is defined
+
+- name: Remove Varnish
+  block:
+    - name: Ensure Varnish service stopped and disabled
+      service:
+        name: varnish
+        state: stopped
+        enabled: false
+
+    - name: Remove the varnish package if installed
+      yum:
+        name: varnish
+        state: absent
+      notify: force systemd to reread configs
+
+    - name: Remove varnish directory
+      file:
+        path: /etc/varnish
+        state: absent
+
+    - name: Revoke firewalld permissions if firewalld is running
+      firewalld:
+        port: "{{ port }}/tcp"
+        immediate: true
+        permanent: true
+        state: disabled
+      when: ansible_facts.services["firewalld.service"].state == "running"
+  rescue:
+    - name: Fail and print message
+      fail:
+        msg: "Got an error inside block, try to rerun tasks with -v option"
+  when: ansible_facts.services["varnish.service"] is defined

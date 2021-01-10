@@ -1,6 +1,6 @@
 ---
 
-varnish_install: true
+install_varnish: true
 firewalld_enabled: true
 
 # available_versions = ["40", "50", "51", "52", "60", "60lts", "61", "62", "63", "64", "65"]
