@@ -296,17 +296,17 @@ sub vcl_backend_response {
 
     {% for backend in backends -%}
     if (beresp.http.host == "{{ backend.host }}") {
-        {% for request in backend.requests -%}
+    {% for request in backend.requests -%}
 
-        {% if request.ttl is defined %}
-        set beresp.ttl = {{ request.ttl }};
-        {% endif %}
+        {% if request.ttl is defined -%}
+            set beresp.ttl = {{ request.ttl }};
+        {% endif -%}
 
-        {% if request.grace is defined %}
-        set beresp.grace = {{ request.grace }};
-        {% endif %}
+        {% if request.grace is defined -%}
+            set beresp.grace = {{ request.grace }};
+        {% endif -%}
 
-        {% endfor %}
+    {% endfor %}
     }
     {% endfor -%}{{''}}
 

@@ -1,0 +1,5 @@
+# TODO: Implement allowed ips for purging using acl, right now it is purging on all situations
+# TODO: Implement banning logic
+# TODO: Fix stupid whitespace problem while rendering template
+# TODO: More configurable VCL configuration
+# TODO: Test the Varnish environment on centos7node02 with different situations like caching images, shutting down backend etc.

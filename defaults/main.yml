@@ -3,8 +3,6 @@
 install_varnish: true
 firewalld_enabled: true
 purging_enabled: true
-# TODO: Implement allowed ips for purging using acl, right now it is purging on all situations
-# TODO: Implement banning logic
 banning_enabled: true
 
 # available_versions = ["40", "50", "51", "52", "60", "60lts", "61", "62", "63", "64", "65"]
@@ -40,7 +38,7 @@ global_grace: 30m
 # http://rocketmodule.com/blog/example-varnish-vcl-drupal-pressflow-site/index.html
 backends:
   - name: default
-    host: default.example.com
+    host: 127.0.0.1
     port: 8080
     max_connections: 800
     first_byte_timeout: 600s
@@ -49,8 +47,8 @@ backends:
     probe_enabled: true
     probe:
       url: "/"
-      timeout: 1s
-      interval: 5s
+      timeout: 5s
+      interval: 30s
       window: 5
       threshold: 3
     requests:
@@ -59,8 +57,8 @@ backends:
         grace: 10m
         keep: 20m
   - name: default2
-    host: default2.example.com
-    port: 8080
+    host: 127.0.0.1
+    port: 8081
     max_connections: 800
     first_byte_timeout: 600s
     connect_timeout: 600s
@@ -68,8 +66,8 @@ backends:
     probe_enabled: true
     probe:
       url: "/"
-      timeout: 1s
-      interval: 5s
+      timeout: 5s
+      interval: 30s
       window: 5
       threshold: 3
     requests:
