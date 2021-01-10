@@ -64,4 +64,4 @@
     - {src_path: default.vcl.j2, dest_path: /etc/varnish/default.vcl, user: root, group: root, mode: '644'}
   notify:
     - force systemd to reread configs
-    - start and enable varnish service
+    - restart and enable varnish service

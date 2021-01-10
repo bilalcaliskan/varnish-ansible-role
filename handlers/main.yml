@@ -4,9 +4,9 @@
   systemd:
     daemon_reload: true
 
-- name: start and enable varnish service
+- name: restart and enable varnish service
   systemd:
     name: varnish
-    state: started
+    state: restarted
     enabled: true
     daemon_reload: true
