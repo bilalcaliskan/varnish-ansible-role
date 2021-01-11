@@ -3,3 +3,4 @@
 # TODO: Fix stupid whitespace problem while rendering template
 # TODO: More configurable VCL configuration
 # TODO: Test the Varnish environment on centos7node02 with different situations like caching images, shutting down backend etc.
+# TODO: Decide to use keep in Varnish conf
