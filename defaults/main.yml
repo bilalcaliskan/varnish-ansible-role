@@ -7,7 +7,6 @@ firewalld_enabled: true
 ############# OS Specific Parameters #############
 required_packages:
   - firewalld
-  - pygpgme
   - yum-utils
   - epel-release
 
