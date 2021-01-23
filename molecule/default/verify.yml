@@ -4,12 +4,6 @@
   hosts: all
   become: true
   tasks:
-    - name: Ensure varnish service is started and enabled
-      service:
-        name: varnish
-        state: started
-        enabled: true
-
     - name: Ensure Varnish port is reachable
       wait_for:
         host: localhost
