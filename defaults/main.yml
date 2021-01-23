@@ -1,7 +1,17 @@
 ---
 
+############# Behavioral Parameters #############
 install_varnish: true
 firewalld_enabled: true
+
+############# OS Specific Parameters #############
+required_packages:
+  - firewalld
+  - pygpgme
+  - yum-utils
+  - epel-release
+
+############# Varnish Specific Parameters #############
 purging_enabled: true
 banning_enabled: true
 
@@ -10,12 +20,6 @@ banning_enabled: true
 version: 60lts
 varnish_install_repo: varnishcache_varnish{{ version }}
 port: 6081
-
-required_packages:
-  - firewalld
-  - pygpgme
-  - yum-utils
-  - epel-release
 
 # Locked shared memory - should suffice to lock the shared memory log
 # (varnishd -l argument)

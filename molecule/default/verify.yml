@@ -9,3 +9,9 @@
         name: varnish
         state: started
         enabled: true
+
+    - name: Ensure Varnish port is reachable
+      wait_for:
+        host: localhost
+        port: 6081
+        timeout: 5
