@@ -1,8 +1,7 @@
 ---
-
 ############# Behavioral Parameters #############
 install_varnish: true
-firewalld_enabled: true
+firewalld_enabled: false
 
 ############# OS Specific Parameters #############
 required_packages:

@@ -1,5 +1,4 @@
 ---
-
 - name: Get service facts
   service_facts:
 
@@ -27,13 +26,6 @@
     name: varnish
     enablerepo: "{{ varnish_install_repo }}"
     state: present
-
-- name: Stop firewalld if desired by user
-  service:
-    name: firewalld
-    state: stopped
-    enabled: false
-  when: not (firewalld_enabled | bool)
 
 - name: Firewalld related block
   block:
